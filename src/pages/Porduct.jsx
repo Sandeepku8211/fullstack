@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import assets from '../assets/assets'
+import RelatedProduct from '../components/RelatedProduct'
 
 const Product = () => {
   const { productId } = useParams()
-  const { products, currency } = useContext(ShopContext)
+  const { products, currency,addToCart } = useContext(ShopContext)
   const [productData, setProductData] = useState(null)
   const [image, setImage] = useState('')
   const [size, setSize] = useState('') // Initialize size state
@@ -72,7 +73,7 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700 '>ADD TO CART</button>
+          <button onClick={()=>addToCart(productData._id,size)} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700 '>ADD TO CART</button>
           <hr  className='mt-8 sm:w-45'/>
           <div className='text-sm text-black mt-5 flex flex-col gap-1'>
 
@@ -98,6 +99,7 @@ const Product = () => {
         </div>
 
       </div>
+      <RelatedProduct category={productData.category} SubCategory={productData.SubCategory} />
     </div>
   ) : (
     <div className='opacity-0'></div>
