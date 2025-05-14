@@ -5,12 +5,12 @@ import Title from '../components/Title'
 import ProductItem from '../components/ProductItem'
 
 const Collection = () => {
-  const { products } = useContext(ShopContext)
+  const { products, search, showSearch } = useContext(ShopContext)
   const [showFilters, SetShowFilters] = useState(false)
   const [filterProducts, SetFilterProducts] = useState(products) // Default to all products
   const [selectedCategories, setSelectedCategories] = useState([])
   const [selectedTypes, setSelectedTypes] = useState([])
-  const [sortOption, setSortOption] = useState('relavent') // Default sorting option
+  const [sortOption, setSortOption] = useState('relevant') // Corrected spelling
   const [SubCategory, setSubCateogry] = useState([])
 
   const toggleSubCategory = (e) => {
@@ -40,6 +40,13 @@ const Collection = () => {
       productCopy = productCopy.filter((item) => selectedTypes.includes(item.type))
     }
 
+    // Filter by search
+    if (showSearch && search) {
+      productCopy = productCopy.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+
     // Sort products
     if (sortOption === 'low-high') {
       productCopy = productCopy.sort((a, b) => a.price - b.price)
@@ -52,7 +59,7 @@ const Collection = () => {
 
   useEffect(() => {
     applyingFilters()
-  }, [products, selectedCategories, selectedTypes, SubCategory, sortOption])
+  }, [products, selectedCategories, selectedTypes, SubCategory, sortOption, search, showSearch])
 
   const handleCategoryChange = (category) => {
     setSelectedCategories((prev) =>
@@ -83,7 +90,7 @@ const Collection = () => {
           <img
             src={assets.dropdown_icon}
             className={`h-3 sm:hidden ${showFilters ? 'rotate-90' : ''}`}
-            alt=''
+            alt='Dropdown Icon'
           />
         </p>
         {/* Category Filter */}
@@ -124,7 +131,7 @@ const Collection = () => {
           </div>
         </div>
         {/* SubCategory Filter */}
-      
+        
         {/* Type Filter */}
         <div
           className={`border border-black pl-5 my-5 py-3 mt-6 ${
@@ -172,7 +179,7 @@ const Collection = () => {
             value={sortOption}
             onChange={handleSortChange}
           >
-            <option value='relavent'>Sort by: Relavent</option>
+            <option value='relevant'>Sort by: Relevant</option>
             <option value='low-high'>Sort by: Low to High</option>
             <option value='high-low'>Sort by: High to Low</option>
           </select>
