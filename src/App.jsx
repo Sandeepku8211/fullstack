@@ -10,11 +10,14 @@ import Order from './pages/Orders.jsx';
 import Login from './pages/Login.jsx';
 import './App.css';
 import Navbar from './components/Navbar.jsx';
+import SearchBar from './components/SearchBar.jsx';
 
 function App() {
   return (
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+     
       <Navbar />
+       <SearchBar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/collection' element={<Collection />} />

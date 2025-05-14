@@ -4,20 +4,26 @@ import { products } from "../assets/assets";
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
+  const [search, setSearch] = useState(""); // Default search value
+  const [showSearch, setShowSearch] = useState(false); // Default search visibility
+  const currency = "Rs"; // Currency symbol
+  const deliveryFee = 20; // Delivery fee
 
-    const [search,setSearch]=useState('')
-    const [showSearch,setshowSearch]=useState(true)
-    const currncy = 'Rs';
-    const  delivery_fee =20;
-    const value ={
-        products,currncy,delivery_fee,search,setshowSearch,setSearch,showSearch
+  const value = {
+    products,
+    currency,
+    deliveryFee,
+    search,
+    setSearch,
+    showSearch,
+    setShowSearch,
+  };
 
-    }
-    return (
-        <ShopContext.Provider value={value}>
-            {props.children}
-        </ShopContext.Provider>
-    )
-}
+  return (
+    <ShopContext.Provider value={value}>
+      {props.children}
+    </ShopContext.Provider>
+  );
+};
 
 export default ShopContextProvider;
